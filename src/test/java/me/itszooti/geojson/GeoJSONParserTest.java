@@ -1,22 +1,40 @@
 package me.itszooti.geojson;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.notNullValue;
+
+import java.io.InputStream;
+
 import org.junit.Before;
 import org.junit.Test;
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.Point;
 
 public class GeoJSONParserTest {
 
 	private GeoJSONParser parser;
 	
+	private InputStream getTestFileStream(String filename) {
+		return this.getClass().getClassLoader().getResourceAsStream(filename);
+	}
+	
 	@Before
 	public void before() {
-		parser = new GeoJSONParser();
+		parser = GeoJSONParser.create();
 	}
 	
 	@Test
 	public void parsePoint() {
-		assertThat(true, equalTo(false));
+		Geometry geom = parser.parseGeometry(getTestFileStream("point.json"));
+		assertThat(geom, notNullValue());
+		assertThat(geom, instanceOf(Point.class));
+		Coordinate coord = geom.getCoordinate();
+		assertThat(coord.x, equalTo(100.0));
+		assertThat(coord.y, equalTo(0.0));
 	}
 	
 	@Test
