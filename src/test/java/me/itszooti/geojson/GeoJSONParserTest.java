@@ -4,6 +4,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
+
+import java.awt.Point;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,28 +23,31 @@ public class GeoJSONParserTest {
 		parser = GeoJSONParser.create();
 	}
 	
+	private void testPoint(GeoPoint point, double expectedX, double expectedY) {
+		GeoPosition position = point.getPosition();
+		assertThat(position, notNullValue());
+		assertThat(position.getX(), equalTo(expectedX));
+		assertThat(position.getY(), equalTo(expectedY));
+	}
+	
 	@Test
 	public void parsePoint() {
 		GeoObject geo = parseFile("point.json");
 		assertThat(geo, notNullValue());
 		assertThat(geo, instanceOf(GeoPoint.class));
-		GeoPosition position = ((GeoPoint)geo).getPosition();
-		assertThat(position, notNullValue());
-		assertThat(position.getX(), equalTo(100.0));
-		assertThat(position.getY(), equalTo(0.0));
+		testPoint((GeoPoint)geo, 100.0, 0.0);
 	}
 	
-//	@Test
-//	public void parseMultiPoint() {
-//		GeoObject geo = parseFile("multipoint.json");
-//		assertThat(geo, notNullValue());
-//		Geometry geom = geo.getGeometry();
-//		assertThat(geom, instanceOf(MultiPoint.class));
-//		MultiPoint mp = (MultiPoint)geom;
-//		assertThat(mp.getNumGeometries(), equalTo(2));
-//		testPoint((Point)mp.getGeometryN(0), 100.0, 0.0);
-//		testPoint((Point)mp.getGeometryN(1), 101.0, 1.0);
-//	}
+	@Test
+	public void parseMultiPoint() {
+		GeoObject geo = parseFile("multipoint.json");
+		assertThat(geo, notNullValue());
+		assertThat(geo, instanceOf(GeoMultiPoint.class));
+		GeoMultiPoint mp = (GeoMultiPoint)geo;
+		assertThat(mp.getNumPoints(), equalTo(2));
+		testPoint(mp.getPoint(0), 100.0, 0.0);
+		testPoint(mp.getPoint(1), 101.0, 1.0);
+	}
 //	
 //	private void testLineString(LineString ls, double[][] expected) {
 //		Coordinate[] coords = ls.getCoordinates();
