@@ -21,8 +21,7 @@ public class GeoJSONParserTest {
 		parser = GeoJSONParser.create();
 	}
 	
-	private void testPoint(GeoPoint point, double expectedX, double expectedY) {
-		GeoPosition position = point.getPosition();
+	private void testPosition(GeoPosition position, double expectedX, double expectedY) {
 		assertThat(position, notNullValue());
 		assertThat(position, equalTo(new GeoPosition(expectedX, expectedY)));
 	}
@@ -32,7 +31,7 @@ public class GeoJSONParserTest {
 		GeoObject geo = parseFile("point.json");
 		assertThat(geo, notNullValue());
 		assertThat(geo, instanceOf(GeoPoint.class));
-		testPoint((GeoPoint)geo, 100.0, 0.0);
+		testPosition(((GeoPoint)geo).getPosition(), 100.0, 0.0);
 	}
 	
 	@Test
@@ -41,9 +40,9 @@ public class GeoJSONParserTest {
 		assertThat(geo, notNullValue());
 		assertThat(geo, instanceOf(GeoMultiPoint.class));
 		GeoMultiPoint multiPoint = (GeoMultiPoint)geo;
-		assertThat(multiPoint.getNumPoints(), equalTo(2));
-		testPoint(multiPoint.getPoint(0), 100.0, 0.0);
-		testPoint(multiPoint.getPoint(1), 101.0, 1.0);
+		assertThat(multiPoint.getNumPositions(), equalTo(2));
+		testPosition(multiPoint.getPosition(0), 100.0, 0.0);
+		testPosition(multiPoint.getPosition(1), 101.0, 1.0);
 	}
 //	
 //	private void testLineString(LineString ls, double[][] expected) {

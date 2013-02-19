@@ -16,7 +16,7 @@ import com.google.gson.JsonParseException;
 public class GeoObjectDeserializer implements JsonDeserializer<GeoObject> {
 
 	private static final List<String> GEOMETRY_TYPES = Arrays.asList(new String[] {
-		"Point"
+		"Point", "MultiPoint"
 	});
 	
 	@Override
