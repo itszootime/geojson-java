@@ -3,11 +3,13 @@ package me.itszooti.geojson.gson;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import me.itszooti.geojson.GeoGeometry;
 import me.itszooti.geojson.GeoJSONParser;
+import me.itszooti.geojson.GeoObject;
+import me.itszooti.geojson.GeoPosition;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.vividsolutions.jts.geom.Geometry;
 
 public class GsonGeoJSONParser extends GeoJSONParser {
 	
@@ -15,13 +17,15 @@ public class GsonGeoJSONParser extends GeoJSONParser {
 	
 	public GsonGeoJSONParser() {
 		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(Geometry.class, new GeometryDeserializer());
+		builder.registerTypeAdapter(GeoObject.class, new GeoObjectDeserializer());
+		builder.registerTypeAdapter(GeoGeometry.class, new GeoGeometryDeserializer());
+		builder.registerTypeAdapter(GeoPosition.class,  new GeoPositionDeserializer());
 		gson = builder.create();
 	}
 
 	@Override
-	public Geometry parseGeometry(InputStream in) {
-		return gson.fromJson(new InputStreamReader(in), Geometry.class);
+	public GeoObject parse(InputStream in) {
+		return gson.fromJson(new InputStreamReader(in), GeoObject.class);
 	}
 
 }
