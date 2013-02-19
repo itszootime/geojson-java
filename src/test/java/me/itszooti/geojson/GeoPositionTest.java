@@ -24,4 +24,9 @@ public class GeoPositionTest {
 		assertThat(position.getY(), equalTo(50.0));
 	}
 	
+	@Test
+	public void equals() {
+		assertThat(position, equalTo(new GeoPosition(100.0, 50.0)));
+	}
+	
 }

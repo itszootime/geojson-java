@@ -17,5 +17,14 @@ public class GeoPosition {
 	public double getY() {
 		return y;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof GeoPosition) {
+			GeoPosition position = (GeoPosition)obj;
+			return getX() == position.getX() && getY() == position.getY();
+		}
+		return false;
+	}
 
 }

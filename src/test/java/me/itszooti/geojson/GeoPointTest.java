@@ -20,4 +20,9 @@ public class GeoPointTest {
 		assertThat(position, notNullValue());
 	}
 	
+	@Test
+	public void isGeoGeometry() {
+		assertThat(point, instanceOf(GeoGeometry.class));
+	}
+	
 }
