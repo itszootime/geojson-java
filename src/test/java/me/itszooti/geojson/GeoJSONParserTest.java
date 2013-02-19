@@ -5,8 +5,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 
-import java.awt.Point;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,8 +24,7 @@ public class GeoJSONParserTest {
 	private void testPoint(GeoPoint point, double expectedX, double expectedY) {
 		GeoPosition position = point.getPosition();
 		assertThat(position, notNullValue());
-		assertThat(position.getX(), equalTo(expectedX));
-		assertThat(position.getY(), equalTo(expectedY));
+		assertThat(position, equalTo(new GeoPosition(expectedX, expectedY)));
 	}
 	
 	@Test

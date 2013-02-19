@@ -15,21 +15,21 @@ public class GeoMultiPointTest {
 	
 	@Before
 	public void before() {
-		multiPoint = new GeoMultiPoint(Arrays.asList(new GeoPoint[] {
-			new GeoPoint(new GeoPosition(1.0, 2.0)),
-			new GeoPoint(new GeoPosition(3.0, 4.0))
+		multiPoint = new GeoMultiPoint(Arrays.asList(new GeoPosition[] {
+			new GeoPosition(1.0, 2.0),
+			new GeoPosition(3.0, 4.0)
 		}));
 	}
 	
 	@Test
-	public void getNumPoints() {
-		assertThat(multiPoint.getNumPoints(), equalTo(2));
+	public void getNumPositions() {
+		assertThat(multiPoint.getNumPositions(), equalTo(2));
 	}
 	
 	@Test
-	public void getPoint() {
-		GeoPoint point = multiPoint.getPoint(1);
-		assertThat(point.getPosition(), equalTo(new GeoPosition(3.0, 4.0)));
+	public void getPosition() {
+		GeoPosition position = multiPoint.getPosition(1);
+		assertThat(position, equalTo(new GeoPosition(3.0, 4.0)));
 	}
 	
 	@Test

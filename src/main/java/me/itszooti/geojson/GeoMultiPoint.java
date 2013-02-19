@@ -1,22 +1,27 @@
 package me.itszooti.geojson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GeoMultiPoint extends GeoGeometry {
 
-	private List<GeoPoint> points;
+	private List<GeoPosition> positions;
 	
-	public GeoMultiPoint(List<GeoPoint> points) {
-		this.points = new ArrayList<GeoPoint>(points);
+	public GeoMultiPoint(List<GeoPosition> positions) {
+		this.positions = new ArrayList<GeoPosition>(positions);
 	}
 	
-	public int getNumPoints() {
-		return points.size();
+	public GeoMultiPoint(GeoPosition[] positions) {
+		this(Arrays.asList(positions));
 	}
 	
-	public GeoPoint getPoint(int index) {
-		return points.get(index);
+	public int getNumPositions() {
+		return positions.size();
+	}
+	
+	public GeoPosition getPosition(int index) {
+		return positions.get(index);
 	}
 	
 }

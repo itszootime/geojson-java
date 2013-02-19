@@ -29,6 +29,9 @@ public class GeoGeometryDeserializer implements JsonDeserializer<GeoGeometry> {
 		if (type.equals("Point")) {
 			GeoPosition position = (GeoPosition)context.deserialize(coordinates, GeoPosition.class);
 			geometry = new GeoPoint(position);
+		} else if (type.equals("MultiPoint")) {
+			GeoPosition[] positions = (GeoPosition[])context.deserialize(coordinates, GeoPosition.class);
+			geometry = new GeoMultiPoint(positions);
 		}
 		
 		return geometry;
