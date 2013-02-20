@@ -1,5 +1,6 @@
 package me.itszooti.geojson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GeoMultiLineString extends GeoGeometry {
@@ -7,7 +8,7 @@ public class GeoMultiLineString extends GeoGeometry {
 	private List<List<GeoPosition>> positions;
 	
 	public GeoMultiLineString(List<List<GeoPosition>> position) {
-		this.positions = positions;
+		this.positions = new ArrayList<List<GeoPosition>>();
 	}
 	
 	public int getNumLineStrings() {
