@@ -3,6 +3,7 @@ package me.itszooti.geojson.gson;
 import java.lang.reflect.Type;
 
 import me.itszooti.geojson.GeoGeometry;
+import me.itszooti.geojson.GeoLineString;
 import me.itszooti.geojson.GeoMultiPoint;
 import me.itszooti.geojson.GeoPoint;
 import me.itszooti.geojson.GeoPosition;
@@ -33,6 +34,9 @@ public class GeoGeometryDeserializer implements JsonDeserializer<GeoGeometry> {
 		} else if (type.equals("MultiPoint")) {
 			GeoPosition[] positions = (GeoPosition[])context.deserialize(coordinates, GeoPosition[].class);
 			geometry = new GeoMultiPoint(positions);
+		} else if (type.equals("LineString")) {
+			GeoPosition[] positions = (GeoPosition[])context.deserialize(coordinates, GeoPosition[].class);
+			geometry = new GeoLineString(positions);
 		}
 		
 		return geometry;
