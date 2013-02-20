@@ -16,15 +16,10 @@ public class GeoMultiPoint extends GeoGeometry {
 		this(Arrays.asList(positions));
 	}
 	
-	public int getNumPositions() {
+	public int getNumPoints() {
 		return positions.size();
 	}
-	
-	public GeoPosition[] getPositions() {
-		return positions.toArray(new GeoPosition[positions.size()]);
-	}
-	
-	public GeoPosition getPosition(int index) {
+	public GeoPosition getPointPosition(int index) {
 		return positions.get(index);
 	}
 	

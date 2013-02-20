@@ -22,19 +22,14 @@ public class GeoMultiPointTest {
 	}
 	
 	@Test
-	public void getNumPositions() {
-		assertThat(multiPoint.getNumPositions(), equalTo(2));
+	public void getNumPoints() {
+		assertThat(multiPoint.getNummmPoints(), equalTo(2));
 	}
 	
 	@Test
-	public void getPosition() {
-		GeoPosition position = multiPoint.getPosition(1);
+	public void getPointPosition() {
+		GeoPosition position = multiPoint.getnnPointPosition(1);
 		assertThat(position, equalTo(new GeoPosition(3.0, 4.0)));
-	}
-	
-	@Test
-	public void getPositions() {
-		assertThat(multiPoint.getPositions(), instanceOf(GeoPosition[].class));
 	}
 	
 	@Test

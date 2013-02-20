@@ -40,9 +40,9 @@ public class GeoJSONParserTest {
 		assertThat(geo, notNullValue());
 		assertThat(geo, instanceOf(GeoMultiPoint.class));
 		GeoMultiPoint multiPoint = (GeoMultiPoint)geo;
-		assertThat(multiPoint.getNumPositions(), equalTo(2));
-		testPosition(multiPoint.getPosition(0), 100.0, 0.0);
-		testPosition(multiPoint.getPosition(1), 101.0, 1.0);
+		assertThat(multiPoint.getNumPoints(), equalTo(2));
+		testPosition(multiPoint.getPointPosition(0), 100.0, 0.0);
+		testPosition(multiPoint.getPointPosition(1), 101.0, 1.0);
 	}
 	
 	private void testPositions(GeoPosition[] positions, double[][] expected) {
