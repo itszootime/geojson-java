@@ -19,8 +19,8 @@ public class GeoMultiPoint extends GeoGeometry {
 	public int getNumPoints() {
 		return positions.size();
 	}
-	public GeoPosition getPointPosition(int index) {
-		return positions.get(index);
+	public GeoPoint getPoint(int index) {
+		return new GeoPoint(positions.get(index));
 	}
 	
 }

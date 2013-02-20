@@ -7,6 +7,7 @@ import java.util.List;
 
 import me.itszooti.geojson.GeoGeometry;
 import me.itszooti.geojson.GeoLineString;
+import me.itszooti.geojson.GeoMultiPoint;
 import me.itszooti.geojson.GeoPoint;
 import me.itszooti.geojson.GeoPolygon;
 import me.itszooti.geojson.GeoPosition;
@@ -48,6 +49,9 @@ public class GeoGeometryDeserializer implements JsonDeserializer<GeoGeometry> {
 				interiors.add(Arrays.asList(interiorArray));
 			}
 			geometry = new GeoPolygon(Arrays.asList(exteriorArray), interiors);
+		} else if (type.equals("MultiPoint")) {
+			GeoPosition[] positions = (GeoPosition[])context.deserialize(coordinates, GeoPosition[].class);
+			geometry = new GeoMultiPoint(positions);
 		}
 		
 		return geometry;
