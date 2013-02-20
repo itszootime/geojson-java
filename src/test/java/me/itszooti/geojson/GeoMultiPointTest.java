@@ -33,6 +33,11 @@ public class GeoMultiPointTest {
 	}
 	
 	@Test
+	public void getPositions() {
+		assertThat(multiPoint.getPositions(), instanceOf(GeoPosition[].class));
+	}
+	
+	@Test
 	public void isGeoGeometry() {
 		assertThat(multiPoint, instanceOf(GeoGeometry.class));
 	}

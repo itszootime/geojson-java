@@ -45,21 +45,21 @@ public class GeoJSONParserTest {
 		testPosition(multiPoint.getPosition(1), 101.0, 1.0);
 	}
 	
-//	private void testLineString(LineString ls, double[][] expected) {
-//		Coordinate[] coords = ls.getCoordinates();
-//		assertThat(coords.length, equalTo(expected.length));
-//		for (int i = 0; i < coords.length; i++) {
-//			assertThat(coords[i].x, equalTo(expected[i][0]));
-//			assertThat(coords[i].y, equalTo(expected[i][1]));
-//		}
-//	}
+	private void testPositions(GeoPosition[] positions, double[][] expected) {
+		assertThat(positions.length, equalTo(expected.length));
+		for (int i = 0; i < positions.length; i++) {
+			assertThat(positions[i], equalTo(new GeoPosition(expected[i][0], expected[i][1])));
+		}
+	}
 	
 	@Test
 	public void parseLineString() {
 		GeoObject geo = parseFile("linestring.json");
 		assertThat(geo, notNullValue());
 		assertThat(geo, instanceOf(GeoLineString.class));
-//		testLineString((LineString)geom, new double[][] { new double[] { 100.0, 0.0 }, new double[] { 101.0, 1.0 } });
+		GeoLineString lineString = (GeoLineString)geo;
+		assertThat(lineString.getNumPositions(), equalTo(2));
+		testPositions(lineString.getPositions(), new double[][] { new double[] { 100.0, 0.0 }, new double[] { 101.0, 1.0 } });
 	}
 //	
 //	@Test
