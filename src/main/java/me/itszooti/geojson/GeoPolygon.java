@@ -24,12 +24,13 @@ public class GeoPolygon extends GeoGeometry {
 		return interiors.size();
 	}
 	
-	public List<GeoPosition> getInterior(int index) {
-		return interiors.get(index);
+	public GeoPosition[] getInterior(int index) {
+		List<GeoPosition> interior = interiors.get(index);
+		return interior.toArray(new GeoPosition[interior.size()]);
 	}
 	
-	public List<GeoPosition> getExterior() {
-		return exterior;
+	public GeoPosition[] getExterior() {
+		return exterior.toArray(new GeoPosition[exterior.size()]);
 	}
 	
 }

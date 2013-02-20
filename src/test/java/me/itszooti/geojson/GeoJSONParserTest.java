@@ -34,16 +34,16 @@ public class GeoJSONParserTest {
 		testPosition(((GeoPoint)geo).getPosition(), 100.0, 0.0);
 	}
 	
-	@Test
-	public void parseMultiPoint() {
-		GeoObject geo = parseFile("multipoint.json");
-		assertThat(geo, notNullValue());
-		assertThat(geo, instanceOf(GeoMultiPoint.class));
-		GeoMultiPoint multiPoint = (GeoMultiPoint)geo;
-		assertThat(multiPoint.getNumPoints(), equalTo(2));
-		testPosition(multiPoint.getPointPosition(0), 100.0, 0.0);
-		testPosition(multiPoint.getPointPosition(1), 101.0, 1.0);
-	}
+//	@Test
+//	public void parseMultiPoint() {
+//		GeoObject geo = parseFile("multipoint.json");
+//		assertThat(geo, notNullValue());
+//		assertThat(geo, instanceOf(GeoMultiPoint.class));
+//		GeoMultiPoint multiPoint = (GeoMultiPoint)geo;
+//		assertThat(multiPoint.getNumPoints(), equalTo(2));
+//		testPosition(multiPoint.getPointPosition(0), 100.0, 0.0);
+//		testPosition(multiPoint.getPointPosition(1), 101.0, 1.0);
+//	}
 	
 	private void testPositions(GeoPosition[] positions, double[][] expected) {
 		assertThat(positions.length, equalTo(expected.length));
@@ -73,45 +73,45 @@ public class GeoJSONParserTest {
 //		testLineString((LineString)mls.getGeometryN(1), new double[][] { new double[] { 102.0, 2.0 }, new double[] { 103.0, 3.0 } });
 //	}
 //	
-//	@Test
-//	public void parsePolygonWithHoles() {
-//		Geometry geom = parseFile("polygon-withholes.json");
-//		assertThat(geom, notNullValue());
-//		assertThat(geom, instanceOf(Polygon.class));
-//		Polygon p = (Polygon)geom;
-//	    testLineString(p.getExteriorRing(), new double[][] {
-//	    	new double[] { 100.0, 0.0 },
-//	    	new double[] { 101.0, 0.0 },
-//	    	new double[] { 101.0, 1.0 },
-//	    	new double[] { 100.0, 1.0 },
-//	    	new double[] { 100.0, 0.0 }
-//	    });
-//	    assertThat(p.getNumInteriorRing(), equalTo(1));
-//	    testLineString(p.getInteriorRingN(0), new double[][] {
-//	    	new double[] { 100.2, 0.2 },
-//	    	new double[] { 100.8, 0.2 },
-//	    	new double[] { 100.8, 0.8 },
-//	    	new double[] { 100.2, 0.8 },
-//	    	new double[] { 100.2, 0.2 }
-//	    });
-//	}
-//	
-//	@Test
-//	public void parsePolygonNoHoles() {
-//		Geometry geom = parseFile("polygon-noholes.json");
-//		assertThat(geom, notNullValue());
-//		assertThat(geom, instanceOf(Polygon.class));
-//		Polygon p = (Polygon)geom;
-//	    testLineString(p.getExteriorRing(), new double[][] {
-//	    	new double[] { 100.0, 0.0 },
-//	    	new double[] { 101.0, 0.0 },
-//	    	new double[] { 101.0, 1.0 },
-//	    	new double[] { 100.0, 1.0 },
-//	    	new double[] { 100.0, 0.0 }
-//	    });
-//	    assertThat(p.getNumInteriorRing(), equalTo(0));
-//	}
-//	
+	@Test
+	public void parsePolygonWithHoles() {
+		GeoObject geo = parseFile("polygon-withholes.json");
+		assertThat(geo, notNullValue());
+		assertThat(geo, instanceOf(GeoPolygon.class));
+		GeoPolygon polygon = (GeoPolygon)geo;
+	    testPositions(polygon.getExterior(), new double[][] {
+	    	new double[] { 100.0, 0.0 },
+	    	new double[] { 101.0, 0.0 },
+	    	new double[] { 101.0, 1.0 },
+	    	new double[] { 100.0, 1.0 },
+	    	new double[] { 100.0, 0.0 }
+	    });
+	    assertThat(polygon.getNumInteriors(), equalTo(1));
+	    testPositions(polygon.getInterior(0), new double[][] {
+	    	new double[] { 100.2, 0.2 },
+	    	new double[] { 100.8, 0.2 },
+	    	new double[] { 100.8, 0.8 },
+	    	new double[] { 100.2, 0.8 },
+	    	new double[] { 100.2, 0.2 }
+	    });
+	}
+	
+	@Test
+	public void parsePolygonNoHoles() {
+		GeoObject geo = parseFile("polygon-noholes.json");
+		assertThat(geo, notNullValue());
+		assertThat(geo, instanceOf(GeoPolygon.class));
+		GeoPolygon polygon = (GeoPolygon)geo;
+	    testPositions(polygon.getExterior(), new double[][] {
+	    	new double[] { 100.0, 0.0 },
+	    	new double[] { 101.0, 0.0 },
+	    	new double[] { 101.0, 1.0 },
+	    	new double[] { 100.0, 1.0 },
+	    	new double[] { 100.0, 0.0 }
+	    });
+	    assertThat(polygon.getNumInteriors(), equalTo(0));
+	}
+	
 //	@Test
 //	public void parseMultiPolygon() {
 //		Geometry geom = parseFile("multipolygon.json");

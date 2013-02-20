@@ -46,18 +46,18 @@ public class GeoPolygonTest {
 	
 	@Test
 	public void getExterior() {
-		List<GeoPosition> exterior = polygonNoHoles.getExterior();
+		GeoPosition[] exterior = polygonNoHoles.getExterior();
 		assertThat(exterior, notNullValue());
-		assertThat(exterior.size(), equalTo(5));
-		assertThat(exterior.get(2), equalTo(new GeoPosition(101.0, 1.0)));
+		assertThat(exterior.length, equalTo(5));
+		assertThat(exterior[2], equalTo(new GeoPosition(101.0, 1.0)));
 	}
 	
 	@Test
 	public void getInterior() {
-		List<GeoPosition> interior = polygonWithHoles.getInterior(0);
+		GeoPosition[] interior = polygonWithHoles.getInterior(0);
 		assertThat(interior, notNullValue());
-		assertThat(interior.size(), equalTo(5));
-		assertThat(interior.get(0), equalTo(new GeoPosition(100.2, 0.2)));
+		assertThat(interior.length, equalTo(5));
+		assertThat(interior[0], equalTo(new GeoPosition(100.2, 0.2)));
 	}
 	
 	@Test
