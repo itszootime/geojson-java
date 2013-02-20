@@ -44,7 +44,7 @@ public class GeoJSONParserTest {
 		testPosition(multiPoint.getPosition(0), 100.0, 0.0);
 		testPosition(multiPoint.getPosition(1), 101.0, 1.0);
 	}
-//	
+	
 //	private void testLineString(LineString ls, double[][] expected) {
 //		Coordinate[] coords = ls.getCoordinates();
 //		assertThat(coords.length, equalTo(expected.length));
@@ -53,14 +53,14 @@ public class GeoJSONParserTest {
 //			assertThat(coords[i].y, equalTo(expected[i][1]));
 //		}
 //	}
-//	
-//	@Test
-//	public void parseLineString() {
-//		Geometry geom = parseFile("linestring.json");
-//		assertThat(geom, notNullValue());
-//		assertThat(geom, instanceOf(LineString.class));
+	
+	@Test
+	public void parseLineString() {
+		GeoObject geo = parseFile("linestring.json");
+		assertThat(geo, notNullValue());
+		assertThat(geo, instanceOf(GeoLineString.class));
 //		testLineString((LineString)geom, new double[][] { new double[] { 100.0, 0.0 }, new double[] { 101.0, 1.0 } });
-//	}
+	}
 //	
 //	@Test
 //	public void parseMultiLineString() {
