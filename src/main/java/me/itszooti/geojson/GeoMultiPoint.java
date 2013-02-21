@@ -6,21 +6,21 @@ import java.util.List;
 
 public class GeoMultiPoint extends GeoGeometry {
 
-	private List<GeoPosition> positions;
+	private List<GeoPosition> pointPositions;
 	
-	public GeoMultiPoint(List<GeoPosition> positions) {
-		this.positions = new ArrayList<GeoPosition>(positions);
+	public GeoMultiPoint(List<GeoPosition> pointPositions) {
+		this.pointPositions = new ArrayList<GeoPosition>(pointPositions);
 	}
 	
-	public GeoMultiPoint(GeoPosition[] positions) {
-		this(Arrays.asList(positions));
+	public GeoMultiPoint(GeoPosition[] pointPositions) {
+		this(Arrays.asList(pointPositions));
 	}
 	
 	public int getNumPoints() {
-		return positions.size();
+		return pointPositions.size();
 	}
 	public GeoPoint getPoint(int index) {
-		return new GeoPoint(positions.get(index));
+		return new GeoPoint(pointPositions.get(index));
 	}
 	
 }

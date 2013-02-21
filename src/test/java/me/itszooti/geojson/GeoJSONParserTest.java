@@ -61,18 +61,22 @@ public class GeoJSONParserTest {
 		assertThat(lineString.getNumPositions(), equalTo(2));
 		testPositions(lineString.getPositions(), new double[][] { new double[] { 100.0, 0.0 }, new double[] { 101.0, 1.0 } });
 	}
-//	
-//	@Test
-//	public void parseMultiLineString() {
-//		Geometry geom = parseFile("multilinestring.json");
-//		assertThat(geom, notNullValue());
-//		assertThat(geom, instanceOf(MultiLineString.class));
-//		MultiLineString mls = (MultiLineString)geom;
-//		assertThat(mls.getNumGeometries(), equalTo(2));
-//		testLineString((LineString)mls.getGeometryN(0), new double[][] { new double[] { 100.0, 0.0 }, new double[] { 101.0, 1.0 } });
-//		testLineString((LineString)mls.getGeometryN(1), new double[][] { new double[] { 102.0, 2.0 }, new double[] { 103.0, 3.0 } });
-//	}
-//	
+	
+	@Test
+	public void parseMultiLineString() {
+		GeoObject geo = parseFile("multilinestring.json");
+		assertThat(geo, notNullValue());
+		assertThat(geo, instanceOf(GeoMultiLineString.class));
+		GeoMultiLineString multiLineString = (GeoMultiLineString)geo;
+		assertThat(multiLineString.getNumLineStrings(), equalTo(2));
+		testPositions(multiLineString.getLineString(0).getPositions(), new double[][] {
+			new double[] { 100.0, 0.0 }, new double[] { 101.0, 1.0 }
+		});
+		testPositions(multiLineString.getLineString(1).getPositions(), new double[][] {
+			new double[] { 102.0, 2.0 }, new double[] { 103.0, 3.0 }
+		});
+	}
+	
 	@Test
 	public void parsePolygonWithHoles() {
 		GeoObject geo = parseFile("polygon-withholes.json");

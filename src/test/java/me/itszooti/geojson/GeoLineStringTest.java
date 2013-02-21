@@ -28,13 +28,7 @@ public class GeoLineStringTest {
 	
 	@Test
 	public void getPositions() {
-		assertThat(lineString.getPositions(), instanceOf(GeoPosition[].class));
-	}
-	
-	@Test
-	public void getPosition() {
-		GeoPosition position = lineString.getPosition(0);
-		assertThat(position, equalTo(new GeoPosition(1.0, 1.0)));
+		assertThat(lineString.getPositions()[0], equalTo(new GeoPosition(1.0, 1.0)));
 	}
 	
 	@Test

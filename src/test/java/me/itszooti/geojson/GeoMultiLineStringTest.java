@@ -30,8 +30,9 @@ public class GeoMultiLineStringTest {
 	}
 	
 	@Test
-	public void getLineStringPosition() {
-		assertThat(multiLineString.getLineStringPositions(), instanceOf(GeoPosition[][].class));
+	public void getLineString() {
+		GeoLineString lineString = multiLineString.getLineString(0);
+		assertThat(lineString.getPositions()[1], equalTo(new GeoPosition(101.0, 1.0)));
 	}
 	
 }

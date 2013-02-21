@@ -24,8 +24,4 @@ public class GeoLineString extends GeoGeometry {
 		return positions.toArray(new GeoPosition[positions.size()]);
 	}
 	
-	public GeoPosition getPosition(int index) {
-		return positions.get(index);
-	}
-	
 }
