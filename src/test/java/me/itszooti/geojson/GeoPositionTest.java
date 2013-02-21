@@ -15,12 +15,12 @@ public class GeoPositionTest {
 	}
 	
 	@Test
-	public void hasX() {
+	public void getX() {
 		assertThat(position.getX(), equalTo(100.0));
 	}
 	
 	@Test
-	public void hasY() {
+	public void getY() {
 		assertThat(position.getY(), equalTo(50.0));
 	}
 	
