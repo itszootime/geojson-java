@@ -165,19 +165,13 @@ public class GeoJSONParserTest {
 	    testPositions(lineString.getPositions(), new double[][] { new double[] { 101.0, 0.0 }, new double[] { 102.0, 1.0 } });
 	}
 	
-//	@Test
-//	public void parseCRS() {
-//		assertThat(true, equalTo(false));
-//	}
-//	
-//	@Test
-//	public void parseFeature() {
-//		assertThat(true, equalTo(false));
-//	}
-//	
-//	@Test
-//	public void parseFeatureCollection() {
-//		assertThat(true, equalTo(false));
-//	}
+	@Test
+	public void parseFeature() {
+		assertThat(true, equalTo(false));
+	}
 	
+	@Test
+	public void parseFeatureCollection() {
+		assertThat(true, equalTo(false));
+	}
 }

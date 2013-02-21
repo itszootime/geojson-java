@@ -1,0 +1,11 @@
+{ "type": "Feature",
+  "id": "a_test_feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [100.0, 0.0]
+  },
+  "properties": {
+    "number": 2,
+    "letter": "B"
+  }
+}
