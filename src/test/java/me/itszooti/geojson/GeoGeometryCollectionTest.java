@@ -2,9 +2,11 @@ package me.itszooti.geojson;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
 
 import java.util.Arrays;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class GeoGeometryCollectionTest {
@@ -33,7 +35,7 @@ public class GeoGeometryCollectionTest {
 		// check point
 		GeoObject geoFirst = geomCollection.getGeometry(0);
 		assertThat(geoFirst, instanceOf(GeoPoint.class));
-		GeoPoint point = (GeoPoint)geoPoint;
+		GeoPoint point = (GeoPoint)geoFirst;
 		assertThat(point.getPosition(), equalTo(new GeoPosition(100.0, 0.0)));
 		
 		// check second
@@ -42,6 +44,11 @@ public class GeoGeometryCollectionTest {
 		GeoLineString lineString = (GeoLineString)geoSecond;
 		assertThat(lineString.getNumPositions(), equalTo(2));
 		assertThat(lineString.getPositions()[0], equalTo(new GeoPosition(101.0, 0.0)));
+	}
+	
+	@Test
+	public void isGeoObject() {
+		assertThat(geomCollection, instanceOf(GeoObject.class));
 	}
 	
 }
