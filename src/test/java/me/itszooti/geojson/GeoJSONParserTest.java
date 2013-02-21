@@ -149,22 +149,22 @@ public class GeoJSONParserTest {
 	    	new double[] { 100.2, 0.2 }
 	    });
 	}
-//	
-//	@Test
-//	public void parseGeometryCollection() {
-//		Geometry geom = parseFile("geometrycollection.json");
-//		assertThat(geom, notNullValue());
-//		assertThat(geom, instanceOf(GeometryCollection.class));
-//	    GeometryCollection gc = (GeometryCollection)geom;
-//	    assertThat(gc.getNumGeometries(), equalTo(2));
-//	    assertThat(gc.getGeometryN(0), instanceOf(Point.class));
-//	    Point p = (Point)gc.getGeometryN(0);
-//	    assertThat(gc.getGeometryN(1), instanceOf(LineString.class));
-//	    testPoint(p, 100.0, 0.0);
-//	    LineString ls = (LineString)gc.getGeometryN(1);
-//	    testLineString(ls, new double[][] { new double[] { 101.0, 0.0 }, new double[] { 102.0, 1.0 } });
-//	}
-//	
+	
+	@Test
+	public void parseGeometryCollection() {
+		GeoObject geo = parseFile("geometrycollection.json");
+		assertThat(geo, notNullValue());
+		assertThat(geo, instanceOf(GeoGeometryCollection.class));
+	    GeoGeometryCollection geomCollection = (GeoGeometryCollection)geo;
+	    assertThat(geomCollection.getNumGeometries(), equalTo(2));
+	    assertThat(geomCollection.getGeometry(0), instanceOf(GeoPoint.class));
+	    GeoPoint point = (GeoPoint)geomCollection.getGeometry(0);
+	    testPosition(point.getPosition(), 100.0, 0.0);
+	    assertThat(geomCollection.getGeometry(1), instanceOf(GeoLineString.class));
+	    GeoLineString lineString = (GeoLineString)geomCollection.getGeometry(1);
+	    testPositions(lineString.getPositions(), new double[][] { new double[] { 101.0, 0.0 }, new double[] { 102.0, 1.0 } });
+	}
+	
 //	@Test
 //	public void parseCRS() {
 //		assertThat(true, equalTo(false));

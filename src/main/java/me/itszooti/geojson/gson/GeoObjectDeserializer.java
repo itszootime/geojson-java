@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import me.itszooti.geojson.GeoGeometry;
+import me.itszooti.geojson.GeoGeometryCollection;
 import me.itszooti.geojson.GeoObject;
 
 import com.google.gson.JsonDeserializationContext;
@@ -31,6 +32,8 @@ public class GeoObjectDeserializer implements JsonDeserializer<GeoObject> {
 		GeoObject geo = null;
 		if (GEOMETRY_TYPES.contains(type)) {
 			geo = (GeoGeometry)arg2.deserialize(object, GeoGeometry.class);
+		} else if (type.equals("GeometryCollection")) {
+			geo = (GeoGeometryCollection)arg2.deserialize(object, GeoGeometryCollection.class);
 		}
 		
 		return geo;
