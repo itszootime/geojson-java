@@ -116,39 +116,39 @@ public class GeoJSONParserTest {
 	    assertThat(polygon.getNumInteriors(), equalTo(0));
 	}
 	
-//	@Test
-//	public void parseMultiPolygon() {
-//		Geometry geom = parseFile("multipolygon.json");
-//		assertThat(geom, notNullValue());
-//		assertThat(geom, instanceOf(MultiPolygon.class));
-//		MultiPolygon mp = (MultiPolygon)geom;
-//		assertThat(mp.getNumGeometries(), equalTo(2));
-//		Polygon p1 = (Polygon)mp.getGeometryN(0);
-//	    testLineString(p1.getExteriorRing(), new double[][] {
-//	    	new double[] { 102.0, 2.0 },
-//	    	new double[] { 103.0, 2.0 },
-//	    	new double[] { 103.0, 3.0 },
-//	    	new double[] { 102.0, 3.0 },
-//	    	new double[] { 102.0, 2.0 }
-//	    });
-//	    assertThat(p1.getNumInteriorRing(), equalTo(0));
-//		Polygon p2 = (Polygon)mp.getGeometryN(1);
-//	    testLineString(p2.getExteriorRing(), new double[][] {
-//	    	new double[] { 100.0, 0.0 },
-//	    	new double[] { 101.0, 0.0 },
-//	    	new double[] { 101.0, 1.0 },
-//	    	new double[] { 100.0, 1.0 },
-//	    	new double[] { 100.0, 0.0 }
-//	    });
-//		assertThat(p2.getNumInteriorRing(), equalTo(1));
-//	    testLineString(p2.getInteriorRingN(0), new double[][] {
-//	    	new double[] { 100.2, 0.2 },
-//	    	new double[] { 100.8, 0.2 },
-//	    	new double[] { 100.8, 0.8 },
-//	    	new double[] { 100.2, 0.8 },
-//	    	new double[] { 100.2, 0.2 }
-//	    });
-//	}
+	@Test
+	public void parseMultiPolygon() {
+		GeoObject geo = parseFile("multipolygon.json");
+		assertThat(geo, notNullValue());
+		assertThat(geo, instanceOf(GeoMultiPolygon.class));
+		GeoMultiPolygon multiPolygon = (GeoMultiPolygon)geo;
+		assertThat(multiPolygon.getNumPolygons(), equalTo(2));
+		GeoPolygon polygonNoHoles = (GeoPolygon)multiPolygon.getPolygon(0);
+	    testPositions(polygonNoHoles.getExterior(), new double[][] {
+	    	new double[] { 102.0, 2.0 },
+	    	new double[] { 103.0, 2.0 },
+	    	new double[] { 103.0, 3.0 },
+	    	new double[] { 102.0, 3.0 },
+	    	new double[] { 102.0, 2.0 }
+	    });
+	    assertThat(polygonNoHoles.getNumInteriors(), equalTo(0));
+		GeoPolygon polygonWithHoles = (GeoPolygon)multiPolygon.getPolygon(1);
+	    testPositions(polygonWithHoles.getExterior(), new double[][] {
+	    	new double[] { 100.0, 0.0 },
+	    	new double[] { 101.0, 0.0 },
+	    	new double[] { 101.0, 1.0 },
+	    	new double[] { 100.0, 1.0 },
+	    	new double[] { 100.0, 0.0 }
+	    });
+		assertThat(polygonWithHoles.getNumInteriors(), equalTo(1));
+	    testPositions(polygonWithHoles.getInterior(0), new double[][] {
+	    	new double[] { 100.2, 0.2 },
+	    	new double[] { 100.8, 0.2 },
+	    	new double[] { 100.8, 0.8 },
+	    	new double[] { 100.2, 0.8 },
+	    	new double[] { 100.2, 0.2 }
+	    });
+	}
 //	
 //	@Test
 //	public void parseGeometryCollection() {
