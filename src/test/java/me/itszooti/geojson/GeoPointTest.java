@@ -18,6 +18,7 @@ public class GeoPointTest {
 	public void getPosition() {
 		GeoPosition position = point.getPosition();
 		assertThat(position, notNullValue());
+		assertThat(position, equalTo(new GeoPosition(100.0, 0.0)));
 	}
 	
 	@Test
