@@ -3,7 +3,9 @@ package me.itszooti.geojson;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.notNullValue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class GeoFeatureTest {
@@ -31,8 +33,8 @@ public class GeoFeatureTest {
 	
 	@Test
 	public void getProperty() {
-		assertThat(feature.getProperty("number"), equalTo(2));
-		assertThat(feature.getProperty("letter"), equalTo("B"));
+		assertThat(feature.getProperty("number"), equalTo((Object)2));
+		assertThat(feature.getProperty("letter"), equalTo((Object)"B"));
 	}
 	
 	@Test
