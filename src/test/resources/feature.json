@@ -4,8 +4,5 @@
     "type": "Point",
     "coordinates": [100.0, 0.0]
   },
-  "properties": {
-    "number": 2,
-    "letter": "B"
-  }
+  "properties": null
 }

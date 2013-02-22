@@ -5,6 +5,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -167,7 +169,39 @@ public class GeoJSONParserTest {
 	
 	@Test
 	public void parseFeature() {
-		assertThat(true, equalTo(false));
+		GeoObject geo = parseFile("feature.json");
+		assertThat(geo, notNullValue());
+		assertThat(geo, instanceOf(GeoFeature.class));
+		GeoFeature feature = (GeoFeature)geo;
+		assertThat(feature.getID(), equalTo("a_test_feature"));
+		GeoGeometry geometry = feature.getGeometry();
+		assertThat(geometry, notNullValue());
+		assertThat(geometry, instanceOf(GeoPoint.class));
+	}
+	
+	@Test
+	public void parseFeatureProperties() {
+		GeoFeature feature = (GeoFeature)parseFile("feature-withproperties.json");
+		Object number = feature.getProperty("number");
+		assertThat(number, instanceOf(Number.class));
+		assertThat((Number)number, equalTo((Number)2));
+		Object string = feature.getProperty("string"); 
+		assertThat(string, instanceOf(String.class));
+		assertThat((String)string, equalTo("i am a string"));
+		Object array = feature.getProperty("array");
+		assertThat(array, instanceOf(Object[].class));
+		Object[] arrayCast = (Object[])array;
+		assertThat((Number)arrayCast[0], equalTo((Number)1));
+		assertThat((Number)arrayCast[1], equalTo((Number)2));
+		assertThat((String)arrayCast[2], equalTo("three!"));
+		Object object = feature.getProperty("object");
+		assertThat(object, instanceOf(Map.class));
+		Map<String, Object> objectCast = (Map<String, Object>)object;
+		assertThat((String)objectCast.get("inner"), equalTo("objects"));
+		assertThat(objectCast.get("may"), instanceOf(Object[].class));
+		Object[] innerArrayCast = (Object[])objectCast.get("may");
+		assertThat((String)innerArrayCast[0], equalTo("be"));
+		assertThat((String)innerArrayCast[1], equalTo("problematic"));
 	}
 	
 	@Test

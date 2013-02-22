@@ -1,0 +1,16 @@
+{ "type": "Feature",
+  "id": "a_test_feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [100.0, 0.0]
+  },
+  "properties": {
+    "number": 2,
+    "string": "i am a string",
+    "array": [ 1, 2, "three!" ],
+    "object": {
+      "inner": "objects",
+      "may": [ "be", "problematic" ]
+    }
+  }
+}

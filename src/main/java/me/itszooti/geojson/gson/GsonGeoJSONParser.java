@@ -3,6 +3,7 @@ package me.itszooti.geojson.gson;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import me.itszooti.geojson.GeoFeature;
 import me.itszooti.geojson.GeoGeometry;
 import me.itszooti.geojson.GeoGeometryCollection;
 import me.itszooti.geojson.GeoJSONParser;
@@ -21,7 +22,8 @@ public class GsonGeoJSONParser extends GeoJSONParser {
 		builder.registerTypeAdapter(GeoObject.class, new GeoObjectDeserializer());
 		builder.registerTypeAdapter(GeoPosition.class,  new GeoPositionDeserializer());
 		builder.registerTypeAdapter(GeoGeometry.class, new GeoGeometryDeserializer());
-		builder.registerTypeAdapter(GeoGeometryCollection.class, new GeoGeometryCollectionDeserializer());		
+		builder.registerTypeAdapter(GeoGeometryCollection.class, new GeoGeometryCollectionDeserializer());
+		builder.registerTypeAdapter(GeoFeature.class, new GeoFeatureDeserializer());
 		gson = builder.create();
 	}
 
