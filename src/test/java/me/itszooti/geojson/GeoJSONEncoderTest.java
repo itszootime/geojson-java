@@ -44,7 +44,22 @@ public class GeoJSONEncoderTest {
 	
 	@Test
 	public void encodeMultiPoint() {
-		assertThat(true, equalTo(false));
+		GeoMultiPoint multiPoint = new GeoMultiPoint(Arrays.asList(new GeoPosition[] {
+			new GeoPosition(1.0, 2.0),
+			new GeoPosition(3.0, 4.0)
+		}));
+		String json = encoder.encode(multiPoint);
+		JsonElement element = jsonParser.parse(json);
+		assertThat(element, instanceOf(JsonObject.class));
+		JsonObject object = element.getAsJsonObject();
+		assertThat(object.has("type"), equalTo(true));
+		assertThat(object.getAsJsonPrimitive("type").getAsString(), equalTo("MultiPoint"));
+		assertThat(object.has("coordinates"), equalTo(true));
+		JsonArray coords = object.getAsJsonArray("coordinates");
+		testPositions(coords, new double[][] {
+			new double[] { 1.0, 2.0 },
+			new double[] { 3.0, 4.0 }
+		});
 	}
 	
 	private void testPositions(JsonArray positions, double[][] expected) {
