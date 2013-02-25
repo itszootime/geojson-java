@@ -1,14 +1,40 @@
 package me.itszooti.geojson;
 
-import org.junit.Test;
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 public class GeoJSONEncoderTest {
 
+	private GeoJSONEncoder encoder;
+	private JsonParser jsonParser;
+	
+	@Before
+	public void before() {
+		encoder = new GeoJSONEncoder();
+		jsonParser = new JsonParser();
+	}
+	
 	@Test
 	public void encodePoint() {
-		assertThat(true, equalTo(false));
+		GeoPoint point = new GeoPoint(new GeoPosition(100.0, 0.0));
+		String json = encoder.encode(point);
+		JsonElement element = jsonParser.parse(json);
+		assertThat(element, instanceOf(JsonObject.class));
+		JsonObject object = element.getAsJsonObject();
+		assertThat(object.getAsJsonPrimitive("type").getAsString(), equalTo("Point"));
+		assertThat(object.has("coordinates"), equalTo(true));
+		JsonArray coords = object.getAsJsonArray("coordinates");
+		assertThat(coords.size(), equalTo(2));
+		assertThat(coords.get(0).getAsDouble(), equalTo(100.0));
+		assertThat(coords.get(0).getAsDouble(), equalTo(0.0));
 	}
 	
 	@Test
