@@ -196,7 +196,7 @@ public class GeoJSONParserTest {
 		assertThat((String)arrayCast[2], equalTo("three!"));
 		Object object = feature.getProperty("object");
 		assertThat(object, instanceOf(Map.class));
-		Map<String, Object> objectCast = (Map<String, Object>)object;
+		Map<?, ?> objectCast = (Map<?, ?>)object;
 		assertThat((String)objectCast.get("inner"), equalTo("objects"));
 		assertThat(objectCast.get("may"), instanceOf(Object[].class));
 		Object[] innerArrayCast = (Object[])objectCast.get("may");
