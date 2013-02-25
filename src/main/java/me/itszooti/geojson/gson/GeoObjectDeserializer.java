@@ -42,6 +42,10 @@ public class GeoObjectDeserializer implements JsonDeserializer<GeoObject> {
 			geo = (GeoFeatureCollection)arg2.deserialize(object, GeoFeatureCollection.class);
 		}
 		
+		// common objects
+		// assumes that all parsing is done through this class
+		// this is fine for now
+		
 		return geo;
 	}
 
