@@ -90,14 +90,6 @@ public class GeoJSONEncoderTest {
 			new GeoPosition(100.0, 1.0),
 			new GeoPosition(100.0, 0.0)
 		});
-		List<List<GeoPosition>> interiors = new ArrayList<List<GeoPosition>>();
-		interiors.add(Arrays.asList(new GeoPosition[] {
-			new GeoPosition(100.2, 0.2),
-			new GeoPosition(100.8, 0.2),
-			new GeoPosition(100.8, 0.8),
-			new GeoPosition(100.2, 0.8),
-			new GeoPosition(100.2, 0.2) 
-		}));
 		GeoPolygon polygonNoHoles = new GeoPolygon(exterior);
 		String json = encoder.encode(polygonNoHoles);
 		JsonElement element = jsonParser.parse(json);
@@ -110,11 +102,11 @@ public class GeoJSONEncoderTest {
 		assertThat(coords.size(), equalTo(1));
 		JsonArray exteriorCoords = coords.get(0).getAsJsonArray();
 		testPositions(exteriorCoords, new double[][] {
-			new double[] { 100.2, 0.2 },
-			new double[] { 100.8, 0.2 },
-			new double[] { 100.8, 0.8 },
-			new double[] { 100.2, 0.8 },
-			new double[] { 100.2, 0.2 } 
+			new double[] { 100.0, 0.0 }, 
+			new double[] { 101.0, 0.0 },
+			new double[] { 101.0, 1.0 },
+			new double[] { 100.0, 1.0 },
+			new double[] { 100.0, 0.0 }
 		});
 	}
 	
@@ -147,11 +139,11 @@ public class GeoJSONEncoderTest {
 		assertThat(coords.size(), equalTo(2));
 		JsonArray exteriorCoords = coords.get(0).getAsJsonArray();
 		testPositions(exteriorCoords, new double[][] {
-			new double[] { 100.2, 0.2 },
-			new double[] { 100.8, 0.2 },
-			new double[] { 100.8, 0.8 },
-			new double[] { 100.2, 0.8 },
-			new double[] { 100.2, 0.2 } 
+			new double[] { 100.0, 0.0 }, 
+			new double[] { 101.0, 0.0 },
+			new double[] { 101.0, 1.0 },
+			new double[] { 100.0, 1.0 },
+			new double[] { 100.0, 0.0 }
 		});
 		JsonArray interiorCoords = coords.get(1).getAsJsonArray();
 		testPositions(interiorCoords, new double[][] {
