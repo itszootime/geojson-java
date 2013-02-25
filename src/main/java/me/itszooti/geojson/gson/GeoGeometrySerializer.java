@@ -3,6 +3,7 @@ package me.itszooti.geojson.gson;
 import java.lang.reflect.Type;
 
 import me.itszooti.geojson.GeoGeometry;
+import me.itszooti.geojson.GeoLineString;
 import me.itszooti.geojson.GeoPoint;
 
 import com.google.gson.JsonElement;
@@ -22,6 +23,9 @@ public class GeoGeometrySerializer implements JsonSerializer<GeoGeometry> {
 		if (geom instanceof GeoPoint) {
 			GeoPoint point = (GeoPoint)geom;
 			obj.add("coordinates", context.serialize(point.getPosition()));
+		} else if (geom instanceof GeoLineString) {
+			GeoLineString lineString = (GeoLineString)geom;
+			obj.add("coordinates", context.serialize(lineString.getPositions()));
 		}
 		
 		return obj;
