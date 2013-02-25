@@ -4,6 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,9 +45,33 @@ public class GeoJSONEncoderTest {
 		assertThat(true, equalTo(false));
 	}
 	
+	private void testPositions(JsonArray positions, double[][] expected) {
+		assertThat(positions.size(), equalTo(expected.length));
+		for (int i = 0; i < positions.size(); i++) {
+			JsonArray position = positions.get(i).getAsJsonArray();
+			assertThat(position.get(0).getAsDouble(), equalTo(expected[i][0]));
+			assertThat(position.get(1).getAsDouble(), equalTo(expected[i][1]));
+		}
+	}
+	
 	@Test
 	public void encodeLineString() {
-		assertThat(true, equalTo(false));
+		GeoLineString lineString = new GeoLineString(Arrays.asList(new GeoPosition[] {
+			new GeoPosition(1.0, 1.0),
+			new GeoPosition(3.0, 3.0)
+		}));
+		String json = encoder.encode(lineString);
+		JsonElement element = jsonParser.parse(json);
+		assertThat(element, instanceOf(JsonObject.class));
+		JsonObject object = element.getAsJsonObject();
+		assertThat(object.has("type"), equalTo(true));
+		assertThat(object.getAsJsonPrimitive("type").getAsString(), equalTo("LineString"));
+		assertThat(object.has("coordinates"), equalTo(true));
+		JsonArray coords = object.getAsJsonArray("coordinates");
+		testPositions(coords, new double[][] {
+			new double[] { 1.0, 1.0 },
+			new double[] { 3.0, 3.0 }
+		});
 	}
 	
 	@Test
