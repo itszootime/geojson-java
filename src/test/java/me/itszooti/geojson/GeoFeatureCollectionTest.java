@@ -1,8 +1,13 @@
 package me.itszooti.geojson;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
+
+import java.util.Arrays;
+
+import org.junit.Before;
 import org.junit.Test;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.*;
 
 public class GeoFeatureCollectionTest {
 
