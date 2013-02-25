@@ -18,7 +18,7 @@ public class GeoJSONEncoderTest {
 	
 	@Before
 	public void before() {
-		encoder = new GeoJSONEncoder();
+		encoder = GeoJSONEncoder.create();
 		jsonParser = new JsonParser();
 	}
 	
@@ -29,12 +29,13 @@ public class GeoJSONEncoderTest {
 		JsonElement element = jsonParser.parse(json);
 		assertThat(element, instanceOf(JsonObject.class));
 		JsonObject object = element.getAsJsonObject();
+		assertThat(object.has("type"), equalTo(true));
 		assertThat(object.getAsJsonPrimitive("type").getAsString(), equalTo("Point"));
 		assertThat(object.has("coordinates"), equalTo(true));
 		JsonArray coords = object.getAsJsonArray("coordinates");
 		assertThat(coords.size(), equalTo(2));
 		assertThat(coords.get(0).getAsDouble(), equalTo(100.0));
-		assertThat(coords.get(0).getAsDouble(), equalTo(0.0));
+		assertThat(coords.get(1).getAsDouble(), equalTo(0.0));
 	}
 	
 	@Test
