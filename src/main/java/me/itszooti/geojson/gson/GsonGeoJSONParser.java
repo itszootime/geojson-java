@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import me.itszooti.geojson.GeoFeature;
+import me.itszooti.geojson.GeoFeatureCollection;
 import me.itszooti.geojson.GeoGeometry;
 import me.itszooti.geojson.GeoGeometryCollection;
 import me.itszooti.geojson.GeoJSONParser;
@@ -24,6 +25,7 @@ public class GsonGeoJSONParser extends GeoJSONParser {
 		builder.registerTypeAdapter(GeoGeometry.class, new GeoGeometryDeserializer());
 		builder.registerTypeAdapter(GeoGeometryCollection.class, new GeoGeometryCollectionDeserializer());
 		builder.registerTypeAdapter(GeoFeature.class, new GeoFeatureDeserializer());
+		builder.registerTypeAdapter(GeoFeatureCollection.class, new GeoFeatureCollectionDeserializer());
 		gson = builder.create();
 	}
 

@@ -1,8 +1,6 @@
 package me.itszooti.geojson.gson;
 
 import java.lang.reflect.Type;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
