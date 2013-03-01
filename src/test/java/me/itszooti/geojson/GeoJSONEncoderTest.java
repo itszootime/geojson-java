@@ -6,7 +6,9 @@ import static org.hamcrest.Matchers.instanceOf;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +31,7 @@ public class GeoJSONEncoderTest {
 	@Test
 	public void encodePoint() {
 		GeoPoint point = new GeoPoint(new GeoPosition(100.0, 0.0));
+		
 		String json = encoder.encode(point);
 		JsonElement element = jsonParser.parse(json);
 		assertThat(element, instanceOf(JsonObject.class));
@@ -48,6 +51,7 @@ public class GeoJSONEncoderTest {
 			new GeoPosition(1.0, 2.0),
 			new GeoPosition(3.0, 4.0)
 		}));
+		
 		String json = encoder.encode(multiPoint);
 		JsonElement element = jsonParser.parse(json);
 		assertThat(element, instanceOf(JsonObject.class));
@@ -77,6 +81,7 @@ public class GeoJSONEncoderTest {
 			new GeoPosition(1.0, 1.0),
 			new GeoPosition(3.0, 3.0)
 		}));
+		
 		String json = encoder.encode(lineString);
 		JsonElement element = jsonParser.parse(json);
 		assertThat(element, instanceOf(JsonObject.class));
@@ -103,6 +108,7 @@ public class GeoJSONEncoderTest {
 				new GeoPosition(103.0, 3.0)
 			}
 		});
+		
 		String json = encoder.encode(multiLineString);
 		JsonElement element = jsonParser.parse(json);
 		assertThat(element, instanceOf(JsonObject.class));
@@ -132,6 +138,7 @@ public class GeoJSONEncoderTest {
 			new GeoPosition(100.0, 0.0)
 		});
 		GeoPolygon polygonNoHoles = new GeoPolygon(exterior);
+		
 		String json = encoder.encode(polygonNoHoles);
 		JsonElement element = jsonParser.parse(json);
 		assertThat(element, instanceOf(JsonObject.class));
@@ -169,6 +176,7 @@ public class GeoJSONEncoderTest {
 			new GeoPosition(100.2, 0.2) 
 		}));
 		GeoPolygon polygonWithHoles = new GeoPolygon(exterior, interiors);
+		
 		String json = encoder.encode(polygonWithHoles);
 		JsonElement element = jsonParser.parse(json);
 		assertThat(element, instanceOf(JsonObject.class));
@@ -226,6 +234,7 @@ public class GeoJSONEncoderTest {
 		}));
 		interiors.add(interior);
 		GeoMultiPolygon multiPolygon = new GeoMultiPolygon(exteriors, interiors);
+		
 		String json = encoder.encode(multiPolygon);
 		JsonElement element = jsonParser.parse(json);
 		assertThat(element, instanceOf(JsonObject.class));
@@ -274,7 +283,40 @@ public class GeoJSONEncoderTest {
 	
 	@Test
 	public void encodeFeature() {
-		assertThat(true, equalTo(false));
+		GeoFeature feature = new GeoFeature("a_test_feature", new GeoPoint(new GeoPosition(100.0, 0.0)));
+		feature.setProperty("number", 2);
+		feature.setProperty("string", "i am a string");
+		feature.setProperty("array", new Object[] { 1, 2, "three!" });
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("inner", "objects");
+		map.put("may", new Object[] { "be", "problematic" });
+		feature.setProperty("object", map);
+		
+		String json = encoder.encode(feature);
+		JsonElement element = jsonParser.parse(json);
+		assertThat(element, instanceOf(JsonObject.class));
+		JsonObject object = element.getAsJsonObject();
+		assertThat(object.has("type"), equalTo(true));
+		assertThat(object.getAsJsonPrimitive("type").getAsString(), equalTo("Feature"));
+		assertThat(object.has("id"), equalTo(true));
+		assertThat(object.getAsJsonPrimitive("id").getAsString(), equalTo("a_test_feature"));
+		assertThat(object.has("geometry"), equalTo(true));
+		assertThat(object.get("geometry").isJsonNull(), equalTo(false)); // enough?
+		assertThat(object.has("properties"), equalTo(true));
+		JsonObject properties = object.get("properties").getAsJsonObject();
+		assertThat(properties.get("number").getAsJsonPrimitive().getAsInt(), equalTo(2));
+		assertThat(properties.get("string").getAsJsonPrimitive().getAsString(), equalTo("i am a string"));
+		JsonArray array = properties.get("array").getAsJsonArray();
+		assertThat(array.get(0).getAsJsonPrimitive().getAsInt(), equalTo(1));
+		assertThat(array.get(1).getAsJsonPrimitive().getAsInt(), equalTo(2));
+		assertThat(array.get(2).getAsJsonPrimitive().getAsString(), equalTo("three!"));
+		JsonObject propsObj = properties.get("object").getAsJsonObject();
+		assertThat(propsObj.get("inner").getAsJsonPrimitive().getAsString(), equalTo("objects"));
+		JsonArray propsArr = propsObj.get("may").getAsJsonArray();
+		assertThat(propsArr.get(0).getAsJsonPrimitive().getAsString(), equalTo("be"));
+		assertThat(propsArr.get(1).getAsJsonPrimitive().getAsString(), equalTo("problematic"));
+		
+		// TODO: tests with no id, tests with no properties
 	}
 	
 	@Test
