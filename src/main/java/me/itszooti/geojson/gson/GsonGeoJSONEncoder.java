@@ -1,5 +1,6 @@
 package me.itszooti.geojson.gson;
 
+import me.itszooti.geojson.GeoFeature;
 import me.itszooti.geojson.GeoGeometry;
 import me.itszooti.geojson.GeoJsonEncoder;
 import me.itszooti.geojson.GeoObject;
@@ -17,6 +18,7 @@ public class GsonGeoJsonEncoder extends GeoJsonEncoder {
 		builder.registerTypeAdapter(GeoObject.class, new GeoObjectSerializer());
 		builder.registerTypeAdapter(GeoPosition.class, new GeoPositionSerializer());
 		builder.registerTypeAdapter(GeoGeometry.class, new GeoGeometrySerializer());
+		builder.registerTypeAdapter(GeoFeature.class, new GeoFeatureSerializer());
 		gson = builder.create();
 	}
 	

@@ -2,6 +2,7 @@ package me.itszooti.geojson.gson;
 
 import java.lang.reflect.Type;
 
+import me.itszooti.geojson.GeoFeature;
 import me.itszooti.geojson.GeoGeometry;
 import me.itszooti.geojson.GeoObject;
 
@@ -19,6 +20,8 @@ public class GeoObjectSerializer implements JsonSerializer<GeoObject> {
 		// check type
 		if (geo instanceof GeoGeometry) {
 			element = context.serialize(geo, GeoGeometry.class);
+		} else if (geo instanceof GeoFeature) {
+			element = context.serialize(geo, GeoFeature.class);
 		}
 		
 		return element;
