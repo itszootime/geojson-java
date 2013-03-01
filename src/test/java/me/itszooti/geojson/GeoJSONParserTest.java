@@ -10,7 +10,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GeoJSONParserTest {
+public class GeoJsonParserTest {
 
 	private GeoJsonParser parser;
 	
