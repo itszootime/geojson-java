@@ -15,7 +15,7 @@ public class GeoFeature extends GeoObject {
 		properties = new HashMap<String, Object>();
 	}
 	
-	public String getID() {
+	public String getId() {
 		return id;
 	}
 	

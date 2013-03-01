@@ -31,11 +31,11 @@ public class GeoFeatureCollectionTest {
 	public void getFeature() {
 		// get first
 		GeoFeature feature1 = featureColl.getFeature(0);
-		assertThat(feature1.getID(), equalTo("a_test_feature"));
+		assertThat(feature1.getId(), equalTo("a_test_feature"));
 		
 		// get second
 		GeoFeature feature2 = featureColl.getFeature(1);
-		assertThat(feature2.getID(), equalTo("another_test_feature"));
+		assertThat(feature2.getId(), equalTo("another_test_feature"));
 	}
 	
 	@Test

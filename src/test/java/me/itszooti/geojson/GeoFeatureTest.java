@@ -21,7 +21,7 @@ public class GeoFeatureTest {
 	
 	@Test
 	public void getID() {
-		assertThat(feature.getID(), equalTo("a_test_feature"));
+		assertThat(feature.getId(), equalTo("a_test_feature"));
 	}
 	
 	@Test

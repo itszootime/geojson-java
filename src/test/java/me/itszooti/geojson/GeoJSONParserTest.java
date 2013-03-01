@@ -173,7 +173,7 @@ public class GeoJSONParserTest {
 		assertThat(geo, notNullValue());
 		assertThat(geo, instanceOf(GeoFeature.class));
 		GeoFeature feature = (GeoFeature)geo;
-		assertThat(feature.getID(), equalTo("a_test_feature"));
+		assertThat(feature.getId(), equalTo("a_test_feature"));
 		GeoGeometry geometry = feature.getGeometry();
 		assertThat(geometry, notNullValue());
 		assertThat(geometry, instanceOf(GeoPoint.class));
@@ -212,8 +212,8 @@ public class GeoJSONParserTest {
 		GeoFeatureCollection featureColl = (GeoFeatureCollection)geo;
 	    assertThat(featureColl.getNumFeatures(), equalTo(2));
 	    GeoFeature feature1 = featureColl.getFeature(0);
-	    assertThat(feature1.getID(), equalTo("a_test_feature"));
+	    assertThat(feature1.getId(), equalTo("a_test_feature"));
 	    GeoFeature feature2 = featureColl.getFeature(1);
-	    assertThat(feature2.getID(), equalTo("another_test_feature"));
+	    assertThat(feature2.getId(), equalTo("another_test_feature"));
 	}
 }
