@@ -5,6 +5,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,6 +37,14 @@ public class GeoFeatureTest {
 	public void getProperty() {
 		assertThat(feature.getProperty("number"), equalTo((Object)2));
 		assertThat(feature.getProperty("letter"), equalTo((Object)"B"));
+	}
+	
+	@Test
+	public void getPropertyNames() {
+		Set<String> names = feature.getPropertyNames();
+		assertThat(names.size(), equalTo(2));
+		assertThat(names.contains("number"), equalTo(true));
+		assertThat(names.contains("letter"), equalTo(true));
 	}
 	
 	@Test
