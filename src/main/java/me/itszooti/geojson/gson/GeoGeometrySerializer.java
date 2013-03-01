@@ -6,6 +6,7 @@ import me.itszooti.geojson.GeoGeometry;
 import me.itszooti.geojson.GeoLineString;
 import me.itszooti.geojson.GeoMultiLineString;
 import me.itszooti.geojson.GeoMultiPoint;
+import me.itszooti.geojson.GeoMultiPolygon;
 import me.itszooti.geojson.GeoPoint;
 import me.itszooti.geojson.GeoPolygon;
 
@@ -50,6 +51,19 @@ public class GeoGeometrySerializer implements JsonSerializer<GeoGeometry> {
 			JsonArray coords = new JsonArray();
 			for (int i = 0; i < multiLineString.getNumLineStrings(); i++) {
 				coords.add(context.serialize(multiLineString.getLineString(i).getPositions()));
+			}
+			obj.add("coordinates", coords);
+		} else if (geom instanceof GeoMultiPolygon) {
+			GeoMultiPolygon multiPolygon = (GeoMultiPolygon)geom;
+			JsonArray coords = new JsonArray();
+			for (int i = 0; i < multiPolygon.getNumPolygons(); i++) {
+				GeoPolygon polygon = multiPolygon.getPolygon(i);
+				JsonArray polyCoords = new JsonArray();
+				polyCoords.add(context.serialize(polygon.getExterior()));
+				for (int j = 0; j < polygon.getNumInteriors(); j++) {
+					polyCoords.add(context.serialize(polygon.getInterior(j)));
+				}
+				coords.add(polyCoords);
 			}
 			obj.add("coordinates", coords);
 		}
