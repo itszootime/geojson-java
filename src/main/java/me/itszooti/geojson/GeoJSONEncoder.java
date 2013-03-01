@@ -1,11 +1,11 @@
 package me.itszooti.geojson;
 
-import me.itszooti.geojson.gson.GsonGeoJSONEncoder;
+import me.itszooti.geojson.gson.GsonGeoJsonEncoder;
 
-public abstract class GeoJSONEncoder {
+public abstract class GeoJsonEncoder {
 
-	public static GeoJSONEncoder create() {
-		return new GsonGeoJSONEncoder();
+	public static GeoJsonEncoder create() {
+		return new GsonGeoJsonEncoder();
 	}
 	
 	public abstract String encode(GeoObject geo);

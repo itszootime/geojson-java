@@ -7,18 +7,18 @@ import me.itszooti.geojson.GeoFeature;
 import me.itszooti.geojson.GeoFeatureCollection;
 import me.itszooti.geojson.GeoGeometry;
 import me.itszooti.geojson.GeoGeometryCollection;
-import me.itszooti.geojson.GeoJSONParser;
+import me.itszooti.geojson.GeoJsonParser;
 import me.itszooti.geojson.GeoObject;
 import me.itszooti.geojson.GeoPosition;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class GsonGeoJSONParser extends GeoJSONParser {
+public class GsonGeoJsonParser extends GeoJsonParser {
 	
 	private Gson gson;
 	
-	public GsonGeoJSONParser() {
+	public GsonGeoJsonParser() {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(GeoObject.class, new GeoObjectDeserializer());
 		builder.registerTypeAdapter(GeoPosition.class,  new GeoPositionDeserializer());

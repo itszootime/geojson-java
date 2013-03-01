@@ -1,18 +1,18 @@
 package me.itszooti.geojson.gson;
 
 import me.itszooti.geojson.GeoGeometry;
-import me.itszooti.geojson.GeoJSONEncoder;
+import me.itszooti.geojson.GeoJsonEncoder;
 import me.itszooti.geojson.GeoObject;
 import me.itszooti.geojson.GeoPosition;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class GsonGeoJSONEncoder extends GeoJSONEncoder {
+public class GsonGeoJsonEncoder extends GeoJsonEncoder {
 
 	private Gson gson;
 	
-	public GsonGeoJSONEncoder() {
+	public GsonGeoJsonEncoder() {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(GeoObject.class, new GeoObjectSerializer());
 		builder.registerTypeAdapter(GeoPosition.class, new GeoPositionSerializer());

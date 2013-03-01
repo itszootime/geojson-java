@@ -19,12 +19,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 public class GeoJSONEncoderTest {
 
-	private GeoJSONEncoder encoder;
+	private GeoJsonEncoder encoder;
 	private JsonParser jsonParser;
 	
 	@Before
 	public void before() {
-		encoder = GeoJSONEncoder.create();
+		encoder = GeoJsonEncoder.create();
 		jsonParser = new JsonParser();
 	}
 	
@@ -315,8 +315,6 @@ public class GeoJSONEncoderTest {
 		JsonArray propsArr = propsObj.get("may").getAsJsonArray();
 		assertThat(propsArr.get(0).getAsJsonPrimitive().getAsString(), equalTo("be"));
 		assertThat(propsArr.get(1).getAsJsonPrimitive().getAsString(), equalTo("problematic"));
-		
-		// TODO: tests with no id, tests with no properties
 	}
 	
 	@Test

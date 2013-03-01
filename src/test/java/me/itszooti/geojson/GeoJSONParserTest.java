@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class GeoJSONParserTest {
 
-	private GeoJSONParser parser;
+	private GeoJsonParser parser;
 	
 	private GeoObject parseFile(String filename) {
 		return parser.parse(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -20,7 +20,7 @@ public class GeoJSONParserTest {
 	
 	@Before
 	public void before() {
-		parser = GeoJSONParser.create();
+		parser = GeoJsonParser.create();
 	}
 	
 	private void testPosition(GeoPosition position, double expectedX, double expectedY) {
