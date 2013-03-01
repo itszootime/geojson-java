@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import me.itszooti.geojson.GeoGeometry;
 import me.itszooti.geojson.GeoLineString;
+import me.itszooti.geojson.GeoMultiLineString;
 import me.itszooti.geojson.GeoMultiPoint;
 import me.itszooti.geojson.GeoPoint;
 import me.itszooti.geojson.GeoPolygon;
@@ -42,6 +43,13 @@ public class GeoGeometrySerializer implements JsonSerializer<GeoGeometry> {
 			JsonArray coords = new JsonArray();
 			for (int i = 0; i < multiPoint.getNumPoints(); i++) {
 				coords.add(context.serialize(multiPoint.getPoint(i).getPosition()));
+			}
+			obj.add("coordinates", coords);
+		} else if (geom instanceof GeoMultiLineString) {
+			GeoMultiLineString multiLineString = (GeoMultiLineString)geom;
+			JsonArray coords = new JsonArray();
+			for (int i = 0; i < multiLineString.getNumLineStrings(); i++) {
+				coords.add(context.serialize(multiLineString.getLineString(i).getPositions()));
 			}
 			obj.add("coordinates", coords);
 		}
