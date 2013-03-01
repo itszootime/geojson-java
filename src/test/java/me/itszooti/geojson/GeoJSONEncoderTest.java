@@ -93,7 +93,33 @@ public class GeoJSONEncoderTest {
 	
 	@Test
 	public void encodeMultiLineString() {
-		assertThat(true, equalTo(false));
+		GeoMultiLineString multiLineString = new GeoMultiLineString(new GeoPosition[][] {
+			new GeoPosition[] {
+				new GeoPosition(100.0, 0.0),
+				new GeoPosition(101.0, 1.0)
+			},
+			new GeoPosition[] {
+				new GeoPosition(102.0, 2.0),
+				new GeoPosition(103.0, 3.0)
+			}
+		});
+		String json = encoder.encode(multiLineString);
+		JsonElement element = jsonParser.parse(json);
+		assertThat(element, instanceOf(JsonObject.class));
+		JsonObject object = element.getAsJsonObject();
+		assertThat(object.has("type"), equalTo(true));
+		assertThat(object.getAsJsonPrimitive("type").getAsString(), equalTo("MultiLineString"));
+		assertThat(object.has("coordinates"), equalTo(true));
+		JsonArray coords = object.getAsJsonArray("coordinates");
+		assertThat(coords.size(), equalTo(2));
+		testPositions(coords.get(0).getAsJsonArray(), new double[][] {
+			new double[] { 100.0, 0.0 },
+			new double[] { 101.0, 1.0 }
+		});
+		testPositions(coords.get(1).getAsJsonArray(), new double[][] {
+			new double[] { 102.0, 2.0 },
+			new double[] { 103.0, 3.0 }
+		});
 	}
 	
 	@Test
