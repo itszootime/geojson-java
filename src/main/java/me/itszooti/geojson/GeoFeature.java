@@ -1,7 +1,9 @@
 package me.itszooti.geojson;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class GeoFeature extends GeoObject {
 
@@ -25,6 +27,10 @@ public class GeoFeature extends GeoObject {
 	
 	public Object getProperty(String name) {
 		return properties.get(name);
+	}
+	
+	public Set<String> getPropertyNames() {
+		return new HashSet<String>(properties.keySet());
 	}
 	
 	public void setProperty(String name, Object value) {
