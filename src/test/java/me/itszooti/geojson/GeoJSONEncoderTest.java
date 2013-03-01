@@ -320,6 +320,12 @@ public class GeoJSONEncoderTest {
 	}
 	
 	@Test
+	public void encodeFeatureNoIdNoProperties() {
+		GeoFeature feature = new GeoFeature(null, new GeoPoint(new GeoPosition(100.0, 0.0)));
+		assertThat(true, equalTo(false));
+	}
+	
+	@Test
 	public void encodeFeatureCollection() {
 		assertThat(true, equalTo(false));
 	}
