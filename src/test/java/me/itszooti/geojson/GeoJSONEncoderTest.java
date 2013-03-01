@@ -198,7 +198,68 @@ public class GeoJSONEncoderTest {
 	
 	@Test
 	public void encodeMultiPolygon() {
-		assertThat(true, equalTo(false));
+		List<List<GeoPosition>> exteriors = new ArrayList<List<GeoPosition>>();
+		exteriors.add(Arrays.asList(new GeoPosition[] {
+			new GeoPosition(100.0, 0.0), 
+			new GeoPosition(101.0, 0.0),
+			new GeoPosition(101.0, 1.0),
+			new GeoPosition(100.0, 1.0),
+			new GeoPosition(100.0, 0.0)
+		}));
+		exteriors.add(Arrays.asList(new GeoPosition[] {
+			new GeoPosition(100.0, 0.0), 
+			new GeoPosition(101.0, 0.0),
+			new GeoPosition(101.0, 1.0),
+			new GeoPosition(100.0, 1.0),
+			new GeoPosition(100.0, 0.0)
+		}));
+		
+		List<List<List<GeoPosition>>> interiors = new ArrayList<List<List<GeoPosition>>>();
+		interiors.add(new ArrayList<List<GeoPosition>>());
+		List<List<GeoPosition>> interior = new ArrayList<List<GeoPosition>>();
+		interior.add(Arrays.asList(new GeoPosition[] {
+			new GeoPosition(100.2, 0.2),
+			new GeoPosition(100.8, 0.2),
+			new GeoPosition(100.8, 0.8),
+			new GeoPosition(100.2, 0.8),
+			new GeoPosition(100.2, 0.2) 
+		}));
+		interiors.add(interior);
+		GeoMultiPolygon multiPolygon = new GeoMultiPolygon(exteriors, interiors);
+		String json = encoder.encode(multiPolygon);
+		JsonElement element = jsonParser.parse(json);
+		assertThat(element, instanceOf(JsonObject.class));
+		JsonObject object = element.getAsJsonObject();
+		assertThat(object.has("type"), equalTo(true));
+		assertThat(object.getAsJsonPrimitive("type").getAsString(), equalTo("MultiPolygon"));
+		assertThat(object.has("coordinates"), equalTo(true));
+		JsonArray coords = object.getAsJsonArray("coordinates");
+		assertThat(coords.size(), equalTo(2));
+		JsonArray firstCoords = coords.get(0).getAsJsonArray();
+		assertThat(firstCoords.size(), equalTo(1)); // no interiors
+		testPositions(firstCoords.get(0).getAsJsonArray(), new double[][] {
+			new double[] { 100.0, 0.0 }, 
+			new double[] { 101.0, 0.0 },
+			new double[] { 101.0, 1.0 },
+			new double[] { 100.0, 1.0 },
+			new double[] { 100.0, 0.0 }
+		});
+		JsonArray secondCoords = coords.get(1).getAsJsonArray();
+		assertThat(secondCoords.size(), equalTo(2)); // has interior
+		testPositions(secondCoords.get(0).getAsJsonArray(), new double[][] {
+			new double[] { 100.0, 0.0 }, 
+			new double[] { 101.0, 0.0 },
+			new double[] { 101.0, 1.0 },
+			new double[] { 100.0, 1.0 },
+			new double[] { 100.0, 0.0 }
+		});
+		testPositions(secondCoords.get(1).getAsJsonArray(), new double[][] {
+			new double[] { 100.2, 0.2 },
+			new double[] { 100.8, 0.2 },
+			new double[] { 100.8, 0.8 },
+			new double[] { 100.2, 0.8 },
+			new double[] { 100.2, 0.2 }
+		});
 	}
 	
 	@Test
