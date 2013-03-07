@@ -9,18 +9,23 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>geojson-jts</artifactId>
-	
+
 	<name>geojson-jts</name>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
-		  <groupId>com.vividsolutions</groupId>
-		  <artifactId>jts</artifactId>
-		  <version>1.13</version>
-		</dependency>            
-	</dependencies>	
+			<groupId>me.itszooti</groupId>
+			<artifactId>geojson-core</artifactId>
+			<version>${version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vividsolutions</groupId>
+			<artifactId>jts</artifactId>
+			<version>1.13</version>
+		</dependency>
+	</dependencies>
 </project>
