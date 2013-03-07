@@ -8,6 +8,7 @@ import me.itszooti.geojson.GeoPosition;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 
 public class TestData {
@@ -26,6 +27,14 @@ public class TestData {
 			new GeoPosition(1.0, 1.0),
 			new GeoPosition(3.0, 3.0)
 		}));
+	}
+	
+	public static LineString getLineString() {
+		GeometryFactory factory = new GeometryFactory();
+		return factory.createLineString(new Coordinate[] {
+			new Coordinate(1.0, 1.0),
+			new Coordinate(3.0, 3.0)
+		});
 	}
 	
 }
