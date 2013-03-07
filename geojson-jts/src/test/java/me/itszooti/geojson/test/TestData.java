@@ -1,5 +1,8 @@
 package me.itszooti.geojson.test;
 
+import java.util.Arrays;
+
+import me.itszooti.geojson.GeoLineString;
 import me.itszooti.geojson.GeoPoint;
 import me.itszooti.geojson.GeoPosition;
 
@@ -16,6 +19,13 @@ public class TestData {
 	public static Point getPoint() {
 		GeometryFactory factory = new GeometryFactory();
 		return factory.createPoint(new Coordinate(100.0, 0.0));
+	}
+	
+	public static GeoLineString getGeoLineString() {
+		return new GeoLineString(Arrays.asList(new GeoPosition[] {
+			new GeoPosition(1.0, 1.0),
+			new GeoPosition(3.0, 3.0)
+		}));
 	}
 	
 }
