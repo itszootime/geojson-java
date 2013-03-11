@@ -6,11 +6,14 @@ import me.itszooti.geojson.GeoLineString;
 import me.itszooti.geojson.GeoPoint;
 import me.itszooti.geojson.GeoPosition;
 
+import org.junit.Ignore;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 
+@Ignore
 public class TestData {
 
 	public static GeoPoint getGeoPoint() {
