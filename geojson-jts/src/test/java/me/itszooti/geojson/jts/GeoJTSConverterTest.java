@@ -17,26 +17,26 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 
-public class GeoJTSConverterTest {
+public class GeoJtsConverterTest {
 
-	private GeoJTSConverter conv;
+	private GeoJtsConverter conv;
 	
 	@Before
 	public void before() {
-		conv = new GeoJTSConverter();
+		conv = new GeoJtsConverter();
 	}
 	
 	@Test
 	public void fromJTSPointType() {
 		Point point = TestData.getPoint();
-		GeoGeometry geoGeom = conv.fromJTS(point);
+		GeoGeometry geoGeom = conv.fromJts(point);
 		assertThat(geoGeom, instanceOf(GeoPoint.class));
 	}
 	
 	@Test
 	public void fromJTSPointCoords() {
 		Point point = TestData.getPoint();
-		GeoPoint geoPoint = (GeoPoint)conv.fromJTS(point);
+		GeoPoint geoPoint = (GeoPoint)conv.fromJts(point);
 		GeoPosition pos = geoPoint.getPosition();
 		assertThat(pos.getX(), equalTo(100.0));
 		assertThat(pos.getY(), equalTo(0.0));
@@ -45,14 +45,14 @@ public class GeoJTSConverterTest {
 	@Test
 	public void fromJTSLineStringType() {
 		LineString lineString = TestData.getLineString();
-		GeoGeometry geoGeom = conv.fromJTS(lineString);
+		GeoGeometry geoGeom = conv.fromJts(lineString);
 		assertThat(geoGeom, instanceOf(GeoLineString.class));
 	}
 	
 	@Test
 	public void fromJTSLineStringCoords() {
 		LineString lineString = TestData.getLineString();
-		GeoLineString geoLineString = (GeoLineString)conv.fromJTS(lineString);
+		GeoLineString geoLineString = (GeoLineString)conv.fromJts(lineString);
 		GeoPosition[] positions = geoLineString.getPositions();
 		assertThat(positions[0].getX(), equalTo(1.0));
 		assertThat(positions[0].getY(), equalTo(1.0));
@@ -63,14 +63,14 @@ public class GeoJTSConverterTest {
 	@Test
 	public void toJTSPointType() {
 		GeoPoint geoPoint = TestData.getGeoPoint();
-		Geometry geom = conv.toJTS(geoPoint);
+		Geometry geom = conv.toJts(geoPoint);
 		assertThat(geom, instanceOf(Point.class));
 	}
 	
 	@Test
 	public void toJTSPointCoords() {
 		GeoPoint geoPoint = TestData.getGeoPoint();
-		Point point = (Point)conv.toJTS(geoPoint);
+		Point point = (Point)conv.toJts(geoPoint);
 		Coordinate coord = point.getCoordinate();
 		assertThat(coord.x, equalTo(100.0));
 		assertThat(coord.y, equalTo(0.0));
@@ -79,14 +79,14 @@ public class GeoJTSConverterTest {
 	@Test
 	public void toJTSLineStringType() {
 		GeoLineString geoLineString = TestData.getGeoLineString();
-		Geometry geom = conv.toJTS(geoLineString);
+		Geometry geom = conv.toJts(geoLineString);
 		assertThat(geom, instanceOf(LineString.class));
 	}
 	
 	@Test
 	public void toJTSLineStringCoords() {
 		GeoLineString geoLineString = TestData.getGeoLineString();
-		LineString lineString = (LineString)conv.toJTS(geoLineString);
+		LineString lineString = (LineString)conv.toJts(geoLineString);
 		Coordinate[] coords = lineString.getCoordinates();
 		assertThat(coords.length, equalTo(2));
 		assertThat(coords[0].x, equalTo(1.0));

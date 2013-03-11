@@ -11,22 +11,22 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 
-public class GeoJTSConverter {
+public class GeoJtsConverter {
 
 	private GeometryFactory geomFactory;
 	
-	public GeoJTSConverter() {
+	public GeoJtsConverter() {
 		geomFactory = new GeometryFactory();
 	}
 	
-	public GeoGeometry fromJTS(Geometry geom) {
+	public GeoGeometry fromJts(Geometry geom) {
 		GeoGeometry geoGeom = null;
 		
 		// check type and convert
 		if (geom instanceof Point) {
-			geoGeom = fromJTSPoint((Point)geom);
+			geoGeom = fromJtsPoint((Point)geom);
 		} else if (geom instanceof LineString) {
-			geoGeom = fromJTSLineString((LineString)geom);
+			geoGeom = fromJtsLineString((LineString)geom);
 		} else {
 			// need exception?
 		}
@@ -34,12 +34,12 @@ public class GeoJTSConverter {
 		return geoGeom;
 	}
 	
-	private GeoPoint fromJTSPoint(Point point) {
+	private GeoPoint fromJtsPoint(Point point) {
 		GeoPosition pos = new GeoPosition(point.getX(), point.getY());
 		return new GeoPoint(pos);
 	}
 	
-	private GeoLineString fromJTSLineString(LineString lineString) {
+	private GeoLineString fromJtsLineString(LineString lineString) {
 		Coordinate[] coords = lineString.getCoordinates();
 		GeoPosition[] positions = new GeoPosition[coords.length];
 		for (int i = 0; i < coords.length; i++) {
@@ -48,14 +48,14 @@ public class GeoJTSConverter {
 		return new GeoLineString(positions);
 	}
 	
-	public Geometry toJTS(GeoGeometry geoGeom) {
+	public Geometry toJts(GeoGeometry geoGeom) {
 		Geometry geom = null;
 		
 		// check type and convert
 		if (geoGeom instanceof GeoPoint) {
-			geom = toJTSPoint((GeoPoint)geoGeom);
+			geom = toJtsPoint((GeoPoint)geoGeom);
 		} else if (geoGeom instanceof GeoLineString) {
-			geom = toJTSLineString((GeoLineString)geoGeom);
+			geom = toJtsLineString((GeoLineString)geoGeom);
 		} else {
 			// need exception?
 		}
@@ -63,12 +63,12 @@ public class GeoJTSConverter {
 		return geom;
 	}
 	
-	private Point toJTSPoint(GeoPoint geoPoint) {
+	private Point toJtsPoint(GeoPoint geoPoint) {
 		GeoPosition pos = geoPoint.getPosition();
 		return geomFactory.createPoint(new Coordinate(pos.getX(), pos.getY()));
 	}
 	
-	private LineString toJTSLineString(GeoLineString geoLineString) {
+	private LineString toJtsLineString(GeoLineString geoLineString) {
 		GeoPosition[] positions = geoLineString.getPositions();
 		Coordinate[] coords = new Coordinate[positions.length];
 		for (int i = 0; i < positions.length; i++) {
