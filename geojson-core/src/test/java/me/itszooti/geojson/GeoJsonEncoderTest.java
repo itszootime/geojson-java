@@ -321,6 +321,9 @@ public class GeoJsonEncoderTest {
 		assertThat(object.get("properties").isJsonNull(), equalTo(true)); // properties must exist
 	}
 	
+//	Bounding box
+//	CRS
+	
 //	@Test
 //	public void encodeGeometryCollection() {
 //		GeoPoint point = new GeoPoint(new GeoPosition(100.0, 0.0));
