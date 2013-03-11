@@ -19,6 +19,7 @@ public class GsonGeoJsonEncoder extends GeoJsonEncoder {
 		builder.registerTypeAdapter(GeoPosition.class, new GeoPositionSerializer());
 		builder.registerTypeAdapter(GeoGeometry.class, new GeoGeometrySerializer());
 		builder.registerTypeAdapter(GeoFeature.class, new GeoFeatureSerializer());
+		builder.serializeNulls();
 		gson = builder.create();
 	}
 	

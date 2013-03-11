@@ -317,6 +317,7 @@ public class GeoJsonEncoderTest {
 		assertThat(object.has("type"), equalTo(true));
 		assertThat(object.getAsJsonPrimitive("type").getAsString(), equalTo("Feature"));
 		assertThat(object.has("id"), equalTo(false)); // id can be missing
+		assertThat(object.has("properties"), equalTo(true));
 		assertThat(object.get("properties").isJsonNull(), equalTo(true)); // properties must exist
 	}
 	
