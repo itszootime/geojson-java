@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import me.itszooti.geojson.GeoGeometry;
 import me.itszooti.geojson.GeoLineString;
 import me.itszooti.geojson.GeoPoint;
+import me.itszooti.geojson.GeoPolygon;
 import me.itszooti.geojson.GeoPosition;
 import me.itszooti.geojson.test.TestData;
 
@@ -16,6 +17,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
 
 public class GeoJtsConverterTest {
 
@@ -93,6 +95,49 @@ public class GeoJtsConverterTest {
 		assertThat(coords[0].y, equalTo(1.0));
 		assertThat(coords[1].x, equalTo(3.0));
 		assertThat(coords[1].y, equalTo(3.0));
+	}
+	
+	@Test
+	public void toJTSPolygonType() {
+		GeoPolygon geoPolygon = TestData.getGeoPolygon();
+		Geometry geom = conv.toJts(geoPolygon);
+		assertThat(geom, instanceOf(Polygon.class));
+	}
+	
+	@Test
+	public void toJTSPolygonExteriorCoords() {
+		GeoPolygon geoPolygon = TestData.getGeoPolygon();
+		Polygon polygon = (Polygon)conv.toJts(geoPolygon);
+		Coordinate[] exteriorCoords = polygon.getExteriorRing().getCoordinates();
+		assertThat(exteriorCoords.length, equalTo(5));
+		assertThat(exteriorCoords[0].x, equalTo(100.0));
+		assertThat(exteriorCoords[0].y, equalTo(0.0));
+		assertThat(exteriorCoords[1].x, equalTo(101.0));
+		assertThat(exteriorCoords[1].y, equalTo(0.0));
+		assertThat(exteriorCoords[2].x, equalTo(101.0));
+		assertThat(exteriorCoords[2].y, equalTo(1.0));
+		assertThat(exteriorCoords[3].x, equalTo(100.0));
+		assertThat(exteriorCoords[3].y, equalTo(1.0));
+		assertThat(exteriorCoords[4].x, equalTo(100.0));
+		assertThat(exteriorCoords[4].y, equalTo(0.0));
+	}
+	
+	@Test
+	public void toJTSPolygonInteriorCoords() {
+		GeoPolygon geoPolygon = TestData.getGeoPolygon();
+		Polygon polygon = (Polygon)conv.toJts(geoPolygon);
+		assertThat(polygon.getNumInteriorRing(), equalTo(1));
+		Coordinate[] interiorCoords = polygon.getInteriorRingN(0).getCoordinates();
+		assertThat(interiorCoords[0].x, equalTo(100.2));
+		assertThat(interiorCoords[0].y, equalTo(0.2));
+		assertThat(interiorCoords[1].x, equalTo(100.8));
+		assertThat(interiorCoords[1].y, equalTo(0.2));
+		assertThat(interiorCoords[2].x, equalTo(100.8));
+		assertThat(interiorCoords[2].y, equalTo(0.8));
+		assertThat(interiorCoords[3].x, equalTo(100.2));
+		assertThat(interiorCoords[3].y, equalTo(0.8));
+		assertThat(interiorCoords[4].x, equalTo(100.2));
+		assertThat(interiorCoords[4].y, equalTo(0.2));
 	}
 	
 }

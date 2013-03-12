@@ -30,6 +30,8 @@ public class GeoJtsConverter {
 			geoGeom = fromJtsPoint((Point)geom);
 		} else if (geom instanceof LineString) {
 			geoGeom = fromJtsLineString((LineString)geom);
+		} else if (geom instanceof Polygon) {
+			geoGeom = fromJtsPolygon((Polygon)geom);
 		} else {
 			throw new IllegalArgumentException("Unsupported JTS Geometry type: " + geom.getClass().getSimpleName());
 		}
@@ -49,6 +51,12 @@ public class GeoJtsConverter {
 	
 	private GeoPolygon fromJtsPolygon(Polygon polygon) {
 		GeoPosition[] exterior = toPositionsArray(polygon.getExteriorRing().getCoordinates());
+		int numInteriors = polygon.getNumInteriorRing();
+		GeoPosition[][] interiors = new GeoPosition[numInteriors][];
+		for (int i = 0; i < numInteriors; i++) {
+			interiors[i] = toPositionsArray(polygon.getInteriorRingN(i).getCoordinates());
+		}
+		return new GeoPolygon(exterior, interiors);
 	}
 	
 	private GeoPosition[] toPositionsArray(Coordinate[] coordinateArray) {
