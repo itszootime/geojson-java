@@ -28,7 +28,7 @@ public class GeoJtsConverter {
 		} else if (geom instanceof LineString) {
 			geoGeom = fromJtsLineString((LineString)geom);
 		} else {
-			// need exception?
+			throw new IllegalArgumentException("Unsupported JTS Geometry: " + geom.getClass().getSimpleName());
 		}
 		
 		return geoGeom;
@@ -57,7 +57,7 @@ public class GeoJtsConverter {
 		} else if (geoGeom instanceof GeoLineString) {
 			geom = toJtsLineString((GeoLineString)geoGeom);
 		} else {
-			// need exception?
+			throw new IllegalArgumentException("Unsupported GeoGeometry: " + geoGeom.getClass().getSimpleName());
 		}
 		
 		return geom;
