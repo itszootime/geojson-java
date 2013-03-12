@@ -3,13 +3,16 @@ package me.itszooti.geojson.jts;
 import me.itszooti.geojson.GeoGeometry;
 import me.itszooti.geojson.GeoLineString;
 import me.itszooti.geojson.GeoPoint;
+import me.itszooti.geojson.GeoPolygon;
 import me.itszooti.geojson.GeoPosition;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
 
 public class GeoJtsConverter {
 
@@ -28,7 +31,7 @@ public class GeoJtsConverter {
 		} else if (geom instanceof LineString) {
 			geoGeom = fromJtsLineString((LineString)geom);
 		} else {
-			throw new IllegalArgumentException("Unsupported JTS Geometry: " + geom.getClass().getSimpleName());
+			throw new IllegalArgumentException("Unsupported JTS Geometry type: " + geom.getClass().getSimpleName());
 		}
 		
 		return geoGeom;
@@ -40,12 +43,20 @@ public class GeoJtsConverter {
 	}
 	
 	private GeoLineString fromJtsLineString(LineString lineString) {
-		Coordinate[] coords = lineString.getCoordinates();
-		GeoPosition[] positions = new GeoPosition[coords.length];
-		for (int i = 0; i < coords.length; i++) {
-			positions[i] = new GeoPosition(coords[i].x, coords[i].y);
-		}
+		GeoPosition[] positions = toPositionsArray(lineString.getCoordinates());
 		return new GeoLineString(positions);
+	}
+	
+	private GeoPolygon fromJtsPolygon(Polygon polygon) {
+		GeoPosition[] exterior = toPositionsArray(polygon.getExteriorRing().getCoordinates());
+	}
+	
+	private GeoPosition[] toPositionsArray(Coordinate[] coordinateArray) {
+		GeoPosition[] positions = new GeoPosition[coordinateArray.length];
+		for (int i = 0; i < coordinateArray.length; i++) {
+			positions[i] = new GeoPosition(coordinateArray[i].x, coordinateArray[i].y);
+		}
+		return positions;
 	}
 	
 	public Geometry toJts(GeoGeometry geoGeom) {
@@ -56,8 +67,10 @@ public class GeoJtsConverter {
 			geom = toJtsPoint((GeoPoint)geoGeom);
 		} else if (geoGeom instanceof GeoLineString) {
 			geom = toJtsLineString((GeoLineString)geoGeom);
+		} else if (geoGeom instanceof GeoPolygon) {
+			geom = toJtsPolygon((GeoPolygon)geoGeom);
 		} else {
-			throw new IllegalArgumentException("Unsupported GeoGeometry: " + geoGeom.getClass().getSimpleName());
+			throw new IllegalArgumentException("Unsupported GeoGeometry type: " + geoGeom.getClass().getSimpleName());
 		}
 		
 		return geom;
@@ -69,12 +82,28 @@ public class GeoJtsConverter {
 	}
 	
 	private LineString toJtsLineString(GeoLineString geoLineString) {
-		GeoPosition[] positions = geoLineString.getPositions();
+		Coordinate[] coords = toCoordinateArray(geoLineString.getPositions());
+		return geomFactory.createLineString(coords);
+	}
+	
+	private Polygon toJtsPolygon(GeoPolygon geoPolygon) {
+		Coordinate[] exteriorCoords = toCoordinateArray(geoPolygon.getExterior());
+		LinearRing shell = geomFactory.createLinearRing(exteriorCoords);
+		LinearRing[] holes = new LinearRing[geoPolygon.getNumInteriors()];
+		for (int i = 0; i < holes.length; i++) {
+			Coordinate[] interiorCoords = toCoordinateArray(geoPolygon.getInterior(i));
+			holes[i] = geomFactory.createLinearRing(interiorCoords);
+		}		
+		return geomFactory.createPolygon(shell, holes);
+	}
+	
+	private Coordinate[] toCoordinateArray(GeoPosition[] positionsArray) {
+		GeoPosition[] positions = positionsArray;
 		Coordinate[] coords = new Coordinate[positions.length];
 		for (int i = 0; i < positions.length; i++) {
 			coords[i] = new Coordinate(positions[i].getX(), positions[i].getY());
 		}
-		return geomFactory.createLineString(coords);
+		return coords;
 	}
 	
 }
