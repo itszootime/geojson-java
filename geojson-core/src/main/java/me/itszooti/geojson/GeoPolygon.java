@@ -1,6 +1,7 @@
 package me.itszooti.geojson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GeoPolygon extends GeoGeometry {
@@ -17,6 +18,17 @@ public class GeoPolygon extends GeoGeometry {
 		this(exterior);
 		for (List<GeoPosition> interior : interiors) {
 			this.interiors.add(new ArrayList<GeoPosition>(interior));
+		}
+	}
+	
+	public GeoPolygon(GeoPosition[] exterior) {
+		this(Arrays.asList(exterior));
+	}
+	
+	public GeoPolygon(GeoPosition[] exterior, GeoPosition[][] interiors) {
+		this(Arrays.asList(exterior));
+		for (int i = 0; i < interiors.length; i++) {
+			this.interiors.add(Arrays.asList(interiors[i]));
 		}
 	}
 	
